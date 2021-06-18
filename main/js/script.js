@@ -2,36 +2,53 @@
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
-function writePassword() {
+function createPassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
+  
 
   passwordText.value = password;
 
+  this.addEventListener("click", function () {
+    passwordText = generatePassword();
+  });
+} 
+
+
+// Function to generate password
+function generatePassword(){
+  // password variation
   var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   var numeric = "0123456789";
   var lowercase = "abcdefghijklmnopqrstuvwxyz";
   var nonAlphanumeric = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
-}
 
-// Function to generate password
-function generatePassword(){
+  var numericalPassword;
+  var specialCharacters;
+  var lowercasePassword;
+  var uppercasePassword;
+  var characterLength;
 
-  // onClick user should recieve this:
-    var characterLength = window.prompt(
+  // users are asked to select which type of password they would like to generate
+    var startGeneratingPassword = parseInt(prompt(
     "Welcome to password generator! \n How many characters would you like to have in your password?"
-  );
+    ));
 
-  if (characterLength < 8 || characterLegth > 12) {
-    window.alert("Please submit password between 8 to 12 characters.");
-  } 
-  
-  if (characterLength > 8 || characterLength <12) {
-    window.alert("Do you want uppsercase letters in your password?");
-  } 
+    if (!startGeneratingPassword) {
+      alert("The field can not be empty");
 
+  if (characterLength < 8 || characterLegth > 128) {
+    window.alert("Please submit a password between 8 and 128 characters.");
+  } 
+  else {
+    numericalPassword = confirm("Do you want your password to contain numbers?");
+    specialCharacters = confirm("Do you want your password to contain special characters?");
+    lowercasePassword = confirm("Do you want your password to contain uppercase letters?");
+    uppercasePassword = confirm("Do you want your password to contain lowercase letters?");
+  };
 
   return generatePassword;
+}
 }
 
 
@@ -45,4 +62,4 @@ function generatePassword(){
 
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", createPassword);
