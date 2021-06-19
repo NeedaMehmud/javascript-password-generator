@@ -33,8 +33,7 @@ THEN the password is either displayed in an alert or written to the page
 
 # Github page
 
-
-
+https://needamehmud2017.github.io/javascript-password-generator/
 
 
 # Screenshot
