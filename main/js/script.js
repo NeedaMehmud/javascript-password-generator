@@ -8,14 +8,15 @@ function writePassword() {
 
   passwordText.value = password;
 }
-var password = [];
-
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
 // Function to generate password
 function generatePassword() {
+  // stores the generated password
+  var password = "";
+  //stores the required character
   var requiredCharacterString = "";
   // password variation
   var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -23,43 +24,58 @@ function generatePassword() {
   var lowercase = "abcdefghijklmnopqrstuvwxyz";
   var nonAlphanumeric = "!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
 
-  // users are asked to select which type of password they would like to generate
-  var characterLength = parseInt(prompt(
-    "Welcome to password generator! \n How many characters would you like to have in your password?"
-  ));
+  var validCharLength = false;
 
-  if (!characterLength) {
-    alert("The field can not be empty");
-  } else if (characterLength < 8 || characterLength > 128) {
-    characterLength.parseInt(prompt("Please submit a password between 8 and 128 characters."));
+  // keep asking user to input valid character length
+  while (!validCharLength) {
+    // users are asked to select which type of password they would like to generate
+    var characterLength = parseInt(prompt(
+      "Welcome to password generator! \n How many characters would you like to have in your password?"
+    ));
+
+    if (!characterLength) {
+      alert("The field can not be empty");
+    } else if (characterLength < 8 || characterLength > 128) {
+      alert("Please submit a password between 8 and 128 characters.");
+    } else {
+      validCharLength = true;
+    }
   }
 
-  var numericalPassword = confirm("Do you want your password to contain numbers?");
+  // only ask the user about required character if valid character length is given.
+  if (validCharLength) {
+    var numericalPassword = confirm("Do you want your password to contain numbers?");
+    if (numericalPassword) {
+      requiredCharacterString = requiredCharacterString + numeric;
+    }
 
-  if (numericalPassword) {
-    requiredCharacterString = requiredCharacterString + numeric;
-    console.log(requiredCharacterString);
+    var specialCharacters = confirm("Do you want your password to contain special characters?");
+    if (specialCharacters) {
+      requiredCharacterString = requiredCharacterString + nonAlphanumeric;
+    }
+
+    var lowercasePassword = confirm("Do you want your password to contain uppercase letters?");
+    if (lowercasePassword) {
+      requiredCharacterString = requiredCharacterString + lowercase;
+    }
+
+    var uppercasePassword = confirm("Do you want your password to contain lowercase letters?");
+    if (uppercasePassword) {
+      requiredCharacterString = requiredCharacterString + uppercase;
+    }
   }
 
-  var specialCharacters = confirm("Do you want your password to contain special characters?");
-  if (specialCharacters) {
-    requiredCharacterString = requiredCharacterString + nonAlphanumeric;
+  if (requiredCharacterString.length === 0) {
+    alert("You must select at least one character type!!");
+  } else {
+    //selects a random character depending on the user choice
+    for (var i = 0; i < characterLength; i++) {
+      var passChar = requiredCharacterString[Math.floor(Math.random() * requiredCharacterString.length)];
+      password = password + passChar;
+    }
   }
 
-  var lowercasePassword = confirm("Do you want your password to contain uppercase letters?");
-  if (lowercasePassword) {
-    requiredCharacterString = requiredCharacterString + lowercase;
-  }
 
-  var uppercasePassword = confirm("Do you want your password to contain lowercase letters?");
-  if (uppercasePassword) {
-    requiredCharacterString = requiredCharacterString + uppercase;
-  }
-
-  for (var i = 0; i < characterLength; i++) {
-    var passwordChar = requiredCharacterString[Math.floor(Math.random() * requiredCharacterString.length)];
-    console.log(passwordChar);
-  }
 
   return password;
 }
